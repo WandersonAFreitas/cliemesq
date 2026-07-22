@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { User, Coffee, Wind, AlertCircle, Plus, MessageCircle, Mail, CheckCircle2, Clock } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { User, Coffee, Wind, AlertCircle, Plus, MessageCircle, Mail, CheckCircle2, Clock, Copy, Link as LinkIcon } from 'lucide-react';
 import { PatientRegistrationModal } from './PatientRegistrationModal';
+import logoSrc from '../../assets/logo.jpg';
 
 interface PatientRecord {
   id: string;
@@ -68,13 +70,27 @@ export const AdminDashboard: React.FC = () => {
     window.open(`mailto:${patient.email}?subject=${subject}&body=${body}`, '_blank');
   };
 
+  const copyToClipboard = async (id: string) => {
+    try {
+      const link = getShareUrl(id);
+      await navigator.clipboard.writeText(link);
+      alert('Link copiado para a área de transferência!');
+    } catch (err) {
+      alert('Erro ao copiar o link.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <header className="bg-teal-900 text-white p-4 shadow-md flex justify-between items-center">
         <div className="flex items-center space-x-3">
-          <img src="/logo.jpg" alt="CLIMESQ" className="h-10 w-10 rounded-full border border-teal-700 object-cover" />
+          <img src={logoSrc} alt="CLIMESQ" className="h-10 w-10 rounded-full border border-teal-700 object-cover" />
           <h1 className="text-xl font-bold">Painel Administrativo</h1>
         </div>
+        <Link to="/acolhimento" className="flex items-center text-teal-200 hover:text-white transition-colors text-sm font-medium bg-teal-800 px-3 py-1.5 rounded-md hover:bg-teal-700">
+          <LinkIcon size={16} className="mr-1.5" />
+          Ver Formulário Público
+        </Link>
       </header>
 
       <main className="flex-1 p-6 max-w-7xl mx-auto w-full">
@@ -202,6 +218,13 @@ export const AdminDashboard: React.FC = () => {
                              disabled={!patient.email}
                            >
                              <Mail size={18} />
+                           </button>
+                           <button 
+                             onClick={() => copyToClipboard(patient.id)}
+                             title="Copiar Link"
+                             className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors"
+                           >
+                             <Copy size={18} />
                            </button>
                          </div>
                       </td>

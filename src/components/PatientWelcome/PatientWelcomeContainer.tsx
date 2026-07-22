@@ -3,6 +3,7 @@ import { FormProvider } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { usePatientWelcome } from './usePatientWelcome';
 import { PatientWelcomeForm } from './PatientWelcomeForm';
+import logoSrc from '../../assets/logo.jpg';
 
 export const PatientWelcomeContainer: React.FC = () => {
   const { formMethods, submitStatus, submitWelcomeForm, resetForm } = usePatientWelcome();
@@ -34,7 +35,7 @@ export const PatientWelcomeContainer: React.FC = () => {
   return (
     <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
       <header className="bg-gradient-to-br from-teal-50 to-cyan-50 p-8 border-b border-teal-100 text-center flex flex-col items-center">
-        <img src="/logo.jpg" alt="CLIMESQ Logo" className="w-24 h-24 rounded-full shadow-md mb-4 border-4 border-white object-cover" />
+        <img src={logoSrc} alt="CLIMESQ Logo" className="w-24 h-24 rounded-full shadow-md mb-4 border-4 border-white object-cover" />
         <h1 className="text-2xl font-bold text-teal-900">Pré-Consulta e Acolhimento</h1>
         <p className="mt-3 text-base text-teal-700">
           Queremos que você se sinta em casa. Por favor, dedique 1 minuto para nos contar como podemos tornar sua experiência hoje mais especial.
