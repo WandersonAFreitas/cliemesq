@@ -76,10 +76,9 @@ export const AdminDashboard: React.FC = () => {
     const subject = encodeURIComponent('Suas preferências de Acolhimento - CLIMESQ');
     const body = encodeURIComponent(`Olá ${patient.fullName},\n\nEstamos aguardando você na CLIMESQ! Por favor, acesse o link abaixo para nos contar suas preferências de acolhimento para a sua consulta de hoje:\n\n${link}`);
     
-    // Força o link web do Gmail em vez do 'mailto:' tradicional. 
-    // Isso garante que abrirá no Gmail (no navegador ou no App nativo se configurado) em vez de forçar o Apple Mail no iOS.
-    const gmailUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${patient.email}&su=${subject}&body=${body}`;
-    window.open(gmailUrl, '_blank');
+    // Usar window.location.href no lugar de window.open para mailto:
+    // O window.open em mailto: costuma ser bloqueado no iOS (Safari) ou abre uma aba em branco.
+    window.location.href = `mailto:${patient.email}?subject=${subject}&body=${body}`;
   };
 
   const copyToClipboard = async (patient: PatientRecord) => {
