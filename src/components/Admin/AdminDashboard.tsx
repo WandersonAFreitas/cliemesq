@@ -60,7 +60,14 @@ export const AdminDashboard: React.FC = () => {
     if (!patient.phone) return alert('Paciente sem telefone cadastrado.');
     const link = getShareUrl(patient.id, patient.fullName);
     const text = encodeURIComponent(`Olá ${patient.fullName}, estamos aguardando você na CLIMESQ! Por favor, acesse o link abaixo para nos contar suas preferências de acolhimento para a sua consulta de hoje:\n\n${link}`);
-    window.open(`https://wa.me/${patient.phone.replace(/\D/g, '')}?text=${text}`, '_blank');
+    
+    // Pega apenas os números. Se for um número de celular/fixo do Brasil sem DDI (10 ou 11 dígitos), adiciona '55' na frente
+    let phoneNum = patient.phone.replace(/\D/g, '');
+    if (phoneNum.length === 10 || phoneNum.length === 11) {
+      phoneNum = `55${phoneNum}`;
+    }
+    
+    window.open(`https://wa.me/${phoneNum}?text=${text}`, '_blank');
   };
 
   const shareViaEmail = (patient: PatientRecord) => {
