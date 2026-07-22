@@ -7,10 +7,15 @@ import type { PatientWelcomeFormData } from './types';
 export const usePatientWelcome = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
+  const hashString = window.location.hash;
+  const queryStr = hashString.includes('?') ? hashString.split('?')[1] : '';
+  const urlParams = new URLSearchParams(queryStr);
+  const defaultName = urlParams.get('name') || '';
+
   const formMethods = useForm<PatientWelcomeFormData>({
     resolver: zodResolver(patientWelcomeSchema),
     defaultValues: {
-      fullName: '',
+      fullName: defaultName,
       socialName: '',
       odorSensitivity: false,
       coldSensitivity: false,
@@ -26,8 +31,9 @@ export const usePatientWelcome = () => {
       
       const existingData = JSON.parse(localStorage.getItem('climesq_patients') || '[]');
       
-      // Checa se há um ID na URL para vincular
-      const urlParams = new URLSearchParams(window.location.search);
+      const hashString = window.location.hash;
+      const queryStr = hashString.includes('?') ? hashString.split('?')[1] : '';
+      const urlParams = new URLSearchParams(queryStr);
       const patientId = urlParams.get('id');
 
       if (patientId) {
