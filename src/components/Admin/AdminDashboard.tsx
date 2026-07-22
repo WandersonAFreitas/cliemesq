@@ -51,8 +51,9 @@ export const AdminDashboard: React.FC = () => {
   };
 
   const getShareUrl = (id: string) => {
-    const baseUrl = window.location.origin;
-    return `${baseUrl}/acolhimento?id=${id}`;
+    const baseHref = window.location.href.split('#')[0];
+    const cleanBase = baseHref.endsWith('/') ? baseHref.slice(0, -1) : baseHref;
+    return `${cleanBase}/#/acolhimento?id=${id}`;
   };
 
   const shareViaWhatsApp = (patient: PatientRecord) => {
